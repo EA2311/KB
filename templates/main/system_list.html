@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Systems</h1>
+<ul>
+{% for system in object_list %}
+    <li>{{ system.name }} - {{ system.description }}</li>
+    <a href="{% url 'unit_list' system.id %}">units</a>
+{% empty %}
+    <li>No systems yet.</li>
+{% endfor %}
+</ul>
+<a href="{%url 'add_system'%}" class="btn btn-outline">Add</a>
+
+</body>
+</html>
