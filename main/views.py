@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 
 from main.models import System, Unit
 
@@ -33,4 +33,10 @@ class UnitListView(ListView):
     def get_context_data(self, **kwargs):
         return set_context(super().get_context_data(**kwargs), pk=self.kwargs['pk'])
 
+
+class UnitDetailView(DetailView):
+    model = Unit
+
+    def get_object(self, queryset=None):
+        return Unit.objects.get(id=self.kwargs['id'])
 

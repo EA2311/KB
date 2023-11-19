@@ -9,16 +9,15 @@ class System(models.Model):
         return self.name
 
 
-class Unit(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
+class DurationOfOperation(models.Model):
+    value = models.FloatField()
+    output = models.IntegerField()
+    start_date = models.DateTimeField()
 
-    cost = models.DecimalField(decimal_places=2, max_digits=20, default=1000)
-
-    system = models.ForeignKey(System, on_delete=models.CASCADE)
+    # unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.output
 
 
 class OperatingMode(models.Model):
@@ -26,18 +25,7 @@ class OperatingMode(models.Model):
     output = models.CharField(choices=[('Non-Regular', 'Non-Regular'), ('Regular', 'Regular')],
                               verbose_name='Operating Mode', max_length=30)
 
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.output
-
-
-class DurationOfOperation(models.Model):
-    value = models.FloatField()
-    output = models.IntegerField()
-    start_date = models.DateTimeField()
-
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    # unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.output
@@ -47,7 +35,7 @@ class StructuralRisk(models.Model):
     value = models.FloatField()
     output = models.CharField(max_length=20)
 
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    # unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.output
@@ -57,7 +45,7 @@ class FunctionalRisk(models.Model):
     value = models.FloatField()
     output = models.CharField(max_length=20)
 
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    # unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.output
@@ -67,7 +55,7 @@ class FailureProbability(models.Model):
     value = models.FloatField()
     output = models.CharField(max_length=20)
 
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    # unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.output
@@ -77,13 +65,30 @@ class Damage(models.Model):
     value = models.FloatField()
     output = models.CharField(max_length=20)
 
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    # unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.output
 
 
-class Rules(models.Model):
+class Unit(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    system = models.ForeignKey(System, on_delete=models.CASCADE)
+
+    cost = models.DecimalField(decimal_places=2, max_digits=20, default=1000)
+    duration_of_operation = models.ForeignKey(DurationOfOperation, on_delete=models.CASCADE, null=True)
+    operating_mode = models.ForeignKey(OperatingMode,  on_delete=models.CASCADE, null=True)
+    structural_risk = models.ForeignKey(StructuralRisk, on_delete=models.CASCADE, null=True)
+    functional_risk = models.ForeignKey(FunctionalRisk, on_delete=models.CASCADE, null=True)
+    failure_probability = models.ForeignKey(FailureProbability, on_delete=models.CASCADE, null=True)
+    damage = models.ForeignKey(Damage, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Rule(models.Model):
     operating_mode = models.FloatField(blank=True, null=True)
     duration_of_operation = models.FloatField(blank=True, null=True)
     structural_risk = models.FloatField(blank=True, null=True)

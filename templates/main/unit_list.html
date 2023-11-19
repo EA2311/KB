@@ -8,7 +8,9 @@
 <h1>Units</h1>
 <ul>
 {% for unit in units %}
-    <li>{{ unit.name }} - {{ unit.description }}</li>
+    <li>{{ unit.name }} - {{ unit.description }}
+        <a href="{% url 'unit_detail' unit.system.id unit.id %}">go</a>
+    </li>
 {% empty %}
     <li>No units yet.</li>
 {% endfor %}
