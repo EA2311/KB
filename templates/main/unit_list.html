@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
+
+{% block title %}
+Unit List
+{% endblock %}
+
+{% block content %}
 <h1>Units</h1>
 <ul>
 {% for unit in units %}
@@ -17,5 +17,4 @@
 </ul>
 <a href="{%url 'system_list'%}" class="btn btn-outline">Back</a>
 
-</body>
-</html>
+{% endblock %}

@@ -88,16 +88,19 @@ class Unit(models.Model):
         return self.name
 
 
-class Rule(models.Model):
-    operating_mode = models.FloatField(blank=True, null=True)
-    duration_of_operation = models.FloatField(blank=True, null=True)
-    structural_risk = models.FloatField(blank=True, null=True)
-    functional_risk = models.FloatField(blank=True, null=True)
-    failure_probability = models.FloatField(blank=True, null=True)
-    damage = models.FloatField(blank=True, null=True)
+RULES_CHOICES = [('Minimal', 0), ('Low', 1), ('Medium', 2), ('Critical', 3)]
 
-    system_condition_assessment = models.FloatField()
-    expert_assessment = models.FloatField()
+
+class Rule(models.Model):
+    operating_mode = models.CharField(blank=True, null=True, choices=RULES_CHOICES, max_length=20)
+    duration_of_operation = models.CharField(blank=True, null=True, choices=RULES_CHOICES, max_length=20)
+    structural_risk = models.CharField(blank=True, null=True, choices=RULES_CHOICES, max_length=20)
+    functional_risk = models.CharField(blank=True, null=True, choices=RULES_CHOICES, max_length=20)
+    failure_probability = models.CharField(blank=True, null=True, choices=RULES_CHOICES, max_length=20)
+    damage = models.CharField(blank=True, null=True, choices=RULES_CHOICES, max_length=20)
+
+    system_condition_assessment = models.CharField(choices=RULES_CHOICES, max_length=20)
+    expert_assessment = models.CharField(choices=RULES_CHOICES, max_length=20)
     rule = models.CharField(max_length=200, default='')
 
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)

@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
 
+{% block title %}
+System Form
+{% endblock %}
+
+{% block content %}
 <div class="center">
 	<form method="post" novalidate class="card">
 	 	{%csrf_token %}
@@ -24,7 +23,6 @@
 		</div>
 	</form>
 </div>
+{% endblock %}
 
 
-</body>
-</html>
