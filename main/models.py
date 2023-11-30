@@ -17,7 +17,7 @@ class DurationOfOperation(models.Model):
     # unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.output
+        return str(self.value)
 
 
 class OperatingMode(models.Model):
@@ -76,19 +76,19 @@ class Unit(models.Model):
     description = models.TextField(blank=True, null=True)
     system = models.ForeignKey(System, on_delete=models.CASCADE)
 
-    cost = models.DecimalField(decimal_places=2, max_digits=20, default=1000)
-    duration_of_operation = models.ForeignKey(DurationOfOperation, on_delete=models.CASCADE, null=True)
-    operating_mode = models.ForeignKey(OperatingMode,  on_delete=models.CASCADE, null=True)
-    structural_risk = models.ForeignKey(StructuralRisk, on_delete=models.CASCADE, null=True)
-    functional_risk = models.ForeignKey(FunctionalRisk, on_delete=models.CASCADE, null=True)
-    failure_probability = models.ForeignKey(FailureProbability, on_delete=models.CASCADE, null=True)
-    damage = models.ForeignKey(Damage, on_delete=models.CASCADE, null=True)
+    cost = models.DecimalField(decimal_places=2, max_digits=20, default=1000, blank=True)
+    duration_of_operation = models.ForeignKey(DurationOfOperation, on_delete=models.CASCADE, null=True, blank=True)
+    operating_mode = models.ForeignKey(OperatingMode,  on_delete=models.CASCADE, null=True, blank=True)
+    structural_risk = models.ForeignKey(StructuralRisk, on_delete=models.CASCADE, null=True, blank=True)
+    functional_risk = models.ForeignKey(FunctionalRisk, on_delete=models.CASCADE, null=True, blank=True)
+    failure_probability = models.ForeignKey(FailureProbability, on_delete=models.CASCADE, null=True, blank=True)
+    damage = models.ForeignKey(Damage, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 
-RULES_CHOICES = [('Minimal', 0), ('Low', 1), ('Medium', 2), ('Critical', 3)]
+RULES_CHOICES = [('Minimal', 'Minimal'), ('Low', 'Low'), ('Medium', 'Medium'), ('Critical', 'Critical')]
 
 
 class Rule(models.Model):

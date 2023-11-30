@@ -6,15 +6,23 @@ Unit List
 
 {% block content %}
 <h1>Units</h1>
-<ul>
-{% for unit in units %}
-    <li>{{ unit.name }} - {{ unit.description }}
-        <a href="{% url 'unit_detail' unit.system.id unit.id %}">go</a>
-    </li>
-{% empty %}
-    <li>No units yet.</li>
+<table class="table ">
+    <tbody class="table-group-divider">
+    {% for unit in units %}
+    <tr>
+      <td>
+           <a href="{% url 'unit_detail' unit.system.id unit.id %}">{{ unit.name }}</a>
+      </td>
+      <td>{{ unit.failure_probability }}</td>
+    </tr>
+    {% empty %}
+        <tr>
+    <td>No units yet.</td>
 {% endfor %}
-</ul>
+    </tr>
+  </tbody>
+</table>
+
 <a href="{%url 'system_list'%}" class="btn btn-outline">Back</a>
 
 {% endblock %}

@@ -6,7 +6,83 @@ Unit Detail
 
 {% block content %}
 <h1>{{ object.name }}</h1>
-<p>Description: {{ object.description }}</p>
-<p>Cost: {{ object.cost }}</p>
-<p>System: {{ object.system }}</p>
+<hr>
+{{ object.description }}
+<hr>
+<table class="table table-striped ">
+<thead>
+    <tr>
+      <th scope="col">Parameter</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+    <tbody class="table-group-divider">
+    <tr>
+      <td>System</td>
+      <td>{{ object.system }}</td>
+    </tr>
+    <tr>
+      <td>Cost</td>
+      <td>{{ object.cost }}</td>
+    </tr>
+    <tr>
+      <td>Duration of operation</td>
+      <td>{{ object.duration_of_operation }}</td>
+    </tr>
+    <tr>
+      <td>Operating mode</td>
+      <td>{{ object.operating_mode }}</td>
+    </tr>
+    <tr>
+      <td>Structural risk</td>
+      <td>{{ object.structural_risk }}</td>
+    </tr>
+    <tr>
+      <td>Functional risk</td>
+      <td>{{ object.functional_risk }}</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<h2>Rules</h2>
+<table class="table">
+<thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Mode</th>
+      <th scope="col">Structural Risk</th>
+      <th scope="col">Functional Risk</th>
+      <th scope="col">Damage</th>
+      <th></th>
+      <th scope="col">System Condition Assessment</th>
+      <th scope="col">Expert Assessment</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+    <tbody class="table-group-divider">
+      {% for rule in rules %}
+
+    <tr>
+      <td>{{ rule.id }}</td>
+      <td>{{ rule.operating_mode }}</td>
+      <td>{{ rule.duration_of_operation }}</td>
+      <td>{{ rule.structural_risk }}</td>
+      <td>{{ rule.functional_risk }}</td>
+      <td>{{ rule.damage }}</td>
+      <td>=></td>
+      <td>{{ rule.system_condition_assessment }}</td>
+      <td>{{ rule.expert_assessment }}</td>
+      <td> <a class="btn btn-primary justify-content-end">Edit</a></td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+<a href="{%url 'add_rule' object.system.id object.id%}" class="btn btn-outline-primary justify-content-end">Add Rule</a>
+
+<hr>
+<h3>Current Assessment: Minimal</h3>
+
+
 {% endblock %}

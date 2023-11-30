@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Rule Form
+{% endblock %}
+
+{% block content %}
+<div class="center">
+	<form method="post" novalidate >
+	 	{%csrf_token %}
+
+	 	<h2>Create Rule</h2>
+		{% for field in form %}
+					{{ field.label_tag }}
+					{{ field }}
+		{% endfor %}
+
+		<div class="form-buttons">
+			<input type="submit" value="Save" class="btn btn-primary"/>
+			<a href="{%url 'unit_detail' pk unit%}" class="btn btn-outline">Cancel</a>
+		</div>
+	</form>
+</div>
+{% endblock %}
