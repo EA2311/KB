@@ -1,19 +1,18 @@
 {% extends 'main/base.html' %}
 
 {% block title %}
-System List
+Ship complex technical systems
 {% endblock %}
 
 {% block content %}
-<h1>Systems</h1>
-<ul>
+<h1>Ship complex technical systems:</h1>
+<ul class="list-group">
 {% for system in object_list %}
-    <li>{{ system.name }} - {{ system.description }}</li>
-    <a href="{% url 'unit_list' system.id %}">units</a>
+    <a href="{% url 'unit_list' system.id %}" class="list-group-item list-group-item-action" >{{ system.name }} ({{ system.description }})</a>
 {% empty %}
-    <li>No systems yet.</li>
+    <li class="list-group-item">No systems yet.</li>
 {% endfor %}
 </ul>
-<a href="{%url 'add_system'%}" class="btn btn-outline">Add</a>
+<a href="{%url 'add_system'%}" class="btn btn-primary">Add</a>
 
 {% endblock %}

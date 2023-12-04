@@ -6,22 +6,35 @@ Unit List
 
 {% block content %}
 <h1>Units</h1>
-<table class="table ">
-    <tbody class="table-group-divider">
-    {% for unit in units %}
-    <tr>
-      <td>
-           <a href="{% url 'unit_detail' unit.system.id unit.id %}">{{ unit.name }}</a>
-      </td>
-      <td>{{ unit.failure_probability }}</td>
-    </tr>
+<hr>
+<div class="container">
+    <div class="row my-1" style="height: 600px;">
+
+    <div class="col-8 px-0 me-1 overflow-auto mh-100 border border-dark bg-light shadow bg-secondary rounded">
+<ul class="list-group pe-0">
+{% for unit in units %}
+
+    <a class="list-group-item list-group-item-action" href="{% url 'unit_detail' unit.system.id unit.id %}">{{ unit.name }} - {{ unit.failure_probability }}</a>
+
     {% empty %}
-        <tr>
-    <td>No units yet.</td>
+
+    <p>No units yet.</p>
 {% endfor %}
-    </tr>
-  </tbody>
-</table>
+</ul>
+
+
+    </div>
+
+    <div class="col border border-dark bg-light shadow bg-secondary rounded">
+      2
+    </div>
+    </div>
+    <div class="row my-1" style="height: 250px;">
+        <div class="col-12 border border-dark bg-light shadow bg-secondary rounded">
+        3
+        </div>
+  </div>
+</div>
 
 <a href="{%url 'system_list'%}" class="btn btn-outline">Back</a>
 
