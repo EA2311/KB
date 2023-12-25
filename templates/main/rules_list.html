@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Rules
+{% endblock %}
+
+{% block buttons %}
+            <li class="nav-item">
+                <a href="{%url 'system_list'%}" class="nav-link link-primary text-white" aria-current="page">
+                    Systems
+                </a>
+            </li>
+
+            <hr>
+            <li>
+                <a href="{% url 'unit_list' pk %}" class="nav-link link-primary text-white ">
+
+                    Units
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'unit_rules_list' pk %}" class="nav-link link-primary text-white active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                  Expert
+                </a>
+            </li>
+              {% endblock %}
+
+
+{% block content %}
+
+<h2>Rules</h2>
+<table class="table">
+<thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Mode</th>
+      <th scope="col">Functional Risk</th>
+        <th></th>
+      <th scope="col">System Condition Assessment</th>
+      <th scope="col">Expert Assessment</th>
+
+    </tr>
+  </thead>
+    <tbody class="table-group-divider">
+      {% for rule in rules %}
+
+    <tr>
+      <td>{{ rule.id }}</td>
+      <td>{{ rule.operating_mode }}</td>
+      <td>{{ rule.duration_of_operation }}</td>
+      <td>{{ rule.functional_risk }}</td>
+      <td>=></td>
+      <td>{{ rule.system_condition_assessment }}</td>
+      <td>{{ rule.expert_assessment }}</td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'add_rule' pk id %}" class="btn btn-primary justify-content-end">Add Rule</a>
+{% endblock %}

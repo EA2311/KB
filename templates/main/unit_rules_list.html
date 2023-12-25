@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Rules
+{% endblock %}
+
+{% block buttons %}
+            <li class="nav-item">
+                <a href="{%url 'system_list'%}" class="nav-link link-primary text-white" aria-current="page">
+                    Systems
+                </a>
+            </li>
+
+            <hr>
+            <li>
+                <a href="{% url 'unit_list' pk %}" class="nav-link link-primary text-white ">
+
+                    Units
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'unit_rules_list' pk %}" class="nav-link link-primary text-white active">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                    Expert
+                </a>
+            </li>
+              {% endblock %}
+
+{% block content %}
+<h1>Choose unit:</h1>
+<ul class="list-group">
+{% for unit in units %}
+    <a href="{% url 'rules_list' pk unit.id %}" class="list-group-item list-group-item-action" >{{ unit.name }} </a>
+{% empty %}
+    <li class="list-group-item">No units yet.</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

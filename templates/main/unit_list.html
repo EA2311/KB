@@ -1,22 +1,49 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
 {% block title %}
 Unit List
 {% endblock %}
 
+    {% block chart %}
+    <script>
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+        exportEnabled: true,
+        animationEnabled: true,
+        theme: "dark2",            title:{
+            },
+            data: [{
+                type: "column",
+                dataPoints: {{ data_points | safe }}
+            }]
+        });
+        chart.render();
+    }
+</script>
+    {% endblock %}
+
 {% block buttons %}
+            <li class="nav-item">
+                <a href="{%url 'system_list'%}" class="nav-link link-primary text-white" aria-current="page">
+                    Systems
+                </a>
+            </li>
+
+            <hr>
             <li>
-                <a href="{% url 'unit_list' pk %}" class="nav-link link-primary text-white">
+                <a href="{% url 'unit_list' pk %}" class="nav-link link-primary text-white active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
                     Units
                 </a>
             </li>
-<li>
-                <a href="{%url 'system_list'%}" class="nav-link link-primary text-white">
-                    Prediction
-                </a>
-            </li>
+
             <li>
-                <a href="{%url 'system_list'%}" class="nav-link link-primary text-white">
+                <a href="{% url 'unit_rules_list' pk %}" class="nav-link link-primary text-white">
                     Expert
                 </a>
             </li>
@@ -28,41 +55,80 @@ Unit List
 <hr>
 <div class="container">
         <div class="row">
-            <div class="col-8 px-3 me-5">
-                <h4>Components</h4>
+            <div class="col-8 px-3 me-4">
+                <h4>Unit list</h4>
                 </div>
             <div class="col px-3 me-1">
-      <h4>Text</h4>
+      <h4>Warnings</h4>
     </div>
 </div>
     <div class="row my-1" style="height: 600px;">
 
-    <div class="col-8 px-0 me-5 overflow-auto mh-100 border border-dark bg-light shadow bg-secondary rounded">
+    <div class="col-8 px-0 me-4 overflow-auto mh-100 border border-dark bg-light shadow bg-secondary rounded">
 <ul class="list-group pe-0">
 {% for unit in units %}
 
-    <a class="list-group-item list-group-item-action" href="{% url 'unit_detail' unit.system.id unit.id %}">{{ unit.name }} - {{ unit.failure_probability }}</a>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <h5 class="w-25">{{ unit.name }}</h5>
+        {% if  unit.failure_probability.output  == "Low" %}
+        <h5><span class="badge bg-secondary w-10">Low</span></h5>
+        {% elif unit.failure_probability.output  == "Minimal" %}
+        <h5><span class="badge bg-success w-10">Minimal</span></h5>
+        {% elif unit.failure_probability.output  == "Medium" %}
+        <h5><span class="badge bg-warning w-10">Medium</span></h5>
+        {% elif unit.failure_probability.output  == "Critical" %}
+        <h5><span class="badge bg-danger w-10">Critical</span></h5>
 
+        {% else %}
+        <p>{{ unit.failure_probability }}</p>
+        {% endif %}
+            <a class="btn btn-outline-primary" href="{% url 'unit_detail' unit.system.id unit.id %}">Detail</a>
+
+</li>
     {% empty %}
 
     <p>No units yet.</p>
 {% endfor %}
+
 </ul>
 
 
     </div>
 
-    <div class="col border border-dark bg-light shadow bg-secondary rounded">
-      2
+    <div class="col border border-dark bg-light shadow bg-secondary rounded px-0 overflow-auto mh-100">
+      <div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action list-group-item-danger">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Fire Fighting System</h5>
+    </div>
+    <p class="mb-1">State: Critical</p>
+    <small>Recommendation: Repair component!</small>
+  </a>
+
+        <a href="#" class="list-group-item list-group-item-action list-group-item-warning" aria-current="true">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Boiler Plant</h5>
+    </div>
+    <p class="mb-1">State: Medium</p>
+    <small>Recommendation: Repair component!</small>
+  </a>
+
+</div>
     </div>
     </div>
+            <div class="row">
+
+            <div class="col-8 px-3 me-5 mt-4">
+                <h4>Dashboard</h4>
+                </div>
+</div>
+
     <div class="row my-1" style="height: 250px;">
-        <div class="col-12 border border-dark bg-light shadow bg-secondary rounded">
-        3
+        <div class="col-12 border border-dark bg-light shadow bg-secondary rounded px-0">
+            <div id="chartContainer" style="width: 100%; height: 260px;"></div>
+
         </div>
   </div>
 </div>
-
-<a href="{%url 'system_list'%}" class="btn btn-outline">Back</a>
 
 {% endblock %}

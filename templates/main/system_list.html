@@ -8,11 +8,11 @@ Ship complex technical systems
 <h1>Ship complex technical systems:</h1>
 <ul class="list-group">
 {% for system in object_list %}
-    <a href="{% url 'unit_list' system.id %}" class="list-group-item list-group-item-action" >{{ system.name }} ({{ system.description }})</a>
+    <a href="{% url 'unit_list' system.id %}" class="list-group-item list-group-item-action" >{{ system.name }}
+        ({{ system.description }})</a>
 {% empty %}
     <li class="list-group-item">No systems yet.</li>
 {% endfor %}
 </ul>
-<a href="{%url 'add_system'%}" class="btn btn-primary">Add</a>
 
 {% endblock %}

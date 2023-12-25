@@ -12,13 +12,7 @@ class RuleForm(forms.ModelForm):
         self.fields['duration_of_operation'].widget.attrs = {
             'class': 'form-control'
         }
-        self.fields['structural_risk'].widget.attrs = {
-            'class': 'form-control'
-        }
         self.fields['functional_risk'].widget.attrs = {
-            'class': 'form-control'
-        }
-        self.fields['damage'].widget.attrs = {
             'class': 'form-control'
         }
 
